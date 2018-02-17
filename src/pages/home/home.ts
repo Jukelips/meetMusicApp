@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {LoginPage} from "../login/login";
+import {PreferencesPage} from "../preferences/preferences";
 
 @Component({
   selector: 'page-home',
@@ -15,9 +16,9 @@ export class HomePage {
   goTo(page) {
     if (page === 'login') {
       this.navCtrl.push(LoginPage);
-    } /*else if (page === 'contact') {
-      this.navCtrl.push(ContactPage);
-    }*/
+    }else if (page === 'preferences') {
+      this.navCtrl.push(PreferencesPage);
+    }
   }
 
   back() {
