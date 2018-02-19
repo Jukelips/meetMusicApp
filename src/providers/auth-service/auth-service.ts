@@ -1,6 +1,6 @@
+  import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import 'rxjs/add/operator/map';
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -15,6 +15,7 @@ export class User{
   email: string;
 
   constructor(name: string, email: string) {
+
     this.name = name;
     this.email = email;
   }
@@ -25,6 +26,11 @@ export class User{
 export class AuthServiceProvider {
 
   currentUser: User;
+
+
+  constructor(public http: HttpClient) {
+    console.log('Hello AuthServiceProvider Provider');
+  }
 
   public login(credentials) {
     if (credentials.email === null || credentials.password === null) {
