@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {LoginPage} from "../login/login";
 import {PreferencesPage} from "../preferences/preferences";
+import {RegisterPage} from "../register/register";
 
 @Component({
   selector: 'page-home',
@@ -18,6 +19,8 @@ export class HomePage {
       this.navCtrl.push(LoginPage);
     }else if (page === 'preferences') {
       this.navCtrl.push(PreferencesPage);
+    }else if (page === 'register') {
+      this.navCtrl.push(RegisterPage);
     }
   }
 

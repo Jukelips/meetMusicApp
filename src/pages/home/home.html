@@ -3,19 +3,38 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>Meet'Music</ion-title>
+    <ion-buttons end>
+      <button (click)="goTo('preferences')" ion-button icon-only>
+      <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Meet'Music Menu Starter</h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <h3>Meet'Music Menu Starter</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <img src="../../assets/imgs/angularlogo.png"/>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button color="secondary" (click)="goTo('login')">Se connecter</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button color="secondary" (click)="goTo('register')">S'inscrire</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-  <p>
-    Welcome to Meet'Music. Here some docs to help you figure it out : <a href="http://ionicframework.com/docs/v2">docs</a>.
-  </p>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
-  <button ion-button secondary >Close</button>
-  <button ion-button (click)="goTo('preferences')">Go To Preference</button>
-  <button ion-button (click)="goTo('login')">Go To Login</button>
 </ion-content>
