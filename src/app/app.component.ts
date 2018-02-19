@@ -8,29 +8,37 @@ import { ListPage } from '../pages/list/list';
 import {LoginPage} from "../pages/login/login";
 import {PreferencesPage} from "../pages/preferences/preferences";
 import { RegisterPage } from "../pages/register/register";
-
+import { AuthServiceProvider, User } from "../providers/auth-service/auth-service"
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
+  username = '';
+  email = '';
+
   rootPage: any = HomePage;
   //rootPage: any = 'LoginPage';
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private auth: AuthServiceProvider) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage },
-      { title: 'Se connecter', component: LoginPage },
-      { title: 'Preferences', component: PreferencesPage },
-      { title: 'Inscription', component: RegisterPage }
-    ];
+    if (auth.isConnected == false) {
+      this.pages = [
+        {title: 'Se connecter', component: LoginPage},
+        {title: 'Inscription', component: RegisterPage}
+      ];
+    } else {
+      this.pages = [
+        { title: 'Home', component: HomePage },
+        { title: 'List', component: ListPage },
+        { title: 'Preferences', component: PreferencesPage }
+      ];
+    }
+
 
   }
 

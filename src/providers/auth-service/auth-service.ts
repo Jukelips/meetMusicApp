@@ -25,11 +25,14 @@ export class User{
 @Injectable()
 export class AuthServiceProvider {
 
-  currentUser: User;
 
+
+  currentUser: User;
+  isConnected : boolean;
 
   constructor(public http: HttpClient) {
     console.log('Hello AuthServiceProvider Provider');
+    this.isConnected = false;
   }
 
   public login(credentials) {
@@ -40,9 +43,11 @@ export class AuthServiceProvider {
         // At this point make a request to your backend to make a real check!
         let access = (credentials.password === "pass" && credentials.email === "email");
         this.currentUser = new User('chemeury', 'meetmusic@ynov.com');
+        this.isConnected = true;
         observer.next(access);
         observer.complete();
       });
+
     }
   }
 
@@ -63,6 +68,7 @@ export class AuthServiceProvider {
   }
 
   public logout() {
+    this.isConnected = false;
     return Observable.create(observer => {
       this.currentUser = null;
       observer.next(true);
