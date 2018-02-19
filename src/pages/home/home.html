@@ -4,14 +4,16 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Meet'Music</ion-title>
-    <ion-buttons end>
-      <button (click)="goTo('preferencesPage')" ion-button icon-only>
+    <div *ngIf="username !=''">
+    <ion-buttons end >
+      <button (click)="goTo('PreferencesPage')" ion-button icon-only>
       <ion-icon name="settings"></ion-icon>
       </button>
       <button ion-button (click)="logout()">
         <ion-icon name="log-out"></ion-icon>
       </button>
     </ion-buttons>
+    </div>
   </ion-navbar>
 </ion-header>
 

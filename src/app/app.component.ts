@@ -8,7 +8,7 @@ import { ListPage } from '../pages/list/list';
 import {LoginPage} from "../pages/login/login";
 import {PreferencesPage} from "../pages/preferences/preferences";
 import { RegisterPage } from "../pages/register/register";
-import { AuthServiceProvider, User } from "../providers/auth-service/auth-service"
+import { AuthServiceProvider } from "../providers/auth-service/auth-service";
 @Component({
   templateUrl: 'app.html'
 })
@@ -28,6 +28,7 @@ export class MyApp {
 
     if (auth.isConnected == false) {
       this.pages = [
+        { title: 'Home', component: HomePage },
         {title: 'Se connecter', component: LoginPage},
         {title: 'Inscription', component: RegisterPage}
       ];

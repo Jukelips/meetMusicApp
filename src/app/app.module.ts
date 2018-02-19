@@ -36,7 +36,7 @@ import { RestServiceProvider } from '../providers/rest-service/rest-service';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,LoginPage,
+    ListPage,
     PreferencesPage,RegisterPage
   ],
   providers: [
