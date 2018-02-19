@@ -5,8 +5,11 @@
     </button>
     <ion-title>Meet'Music</ion-title>
     <ion-buttons end>
-      <button (click)="goTo('preferences')" ion-button icon-only>
+      <button (click)="goTo('preferencesPage')" ion-button icon-only>
       <ion-icon name="settings"></ion-icon>
+      </button>
+      <button ion-button (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -24,14 +27,16 @@
         <img src="../../assets/imgs/angularlogo.png"/>
       </ion-col>
     </ion-row>
+    <h3>Welcome inside, {{username}}!</h3>
+    Your Email is: {{email}}
     <ion-row>
       <ion-col text-center>
-        <button ion-button color="secondary" (click)="goTo('login')">Se connecter</button>
+        <button ion-button color="secondary" (click)="goTo('LoginPage')">Se connecter</button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col text-center>
-        <button ion-button color="secondary" (click)="goTo('register')">S'inscrire</button>
+        <button ion-button color="secondary" (click)="goTo('RegisterPage')">S'inscrire</button>
       </ion-col>
     </ion-row>
   </ion-grid>

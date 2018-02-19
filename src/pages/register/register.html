@@ -14,22 +14,31 @@
 
 
 <ion-content padding>
-  <ion-list>
+  <div class="login-box">
 
-    <ion-item>
-      <ion-label fixed>Username</ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
+    <form (ngSubmit)="register()" #registerForm="ngForm">
+      <ion-row>
+        <ion-col>
+          <ion-list inset>
 
-    <ion-item>
-      <ion-label fixed>Password</ion-label>
-      <ion-input type="password"></ion-input>
-    </ion-item>
+            <ion-item>
+              <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
+            </ion-item>
 
-  </ion-list>
+            <ion-item>
+              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
+            </ion-item>
 
-  <div padding>
-    <button ion-button color="secondary" block>S'inscrire</button>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="signup-col">
+          <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Register</button>
+        </ion-col>
+      </ion-row>
+
+    </form>
   </div>
-
 </ion-content>
