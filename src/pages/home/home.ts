@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import {LoginPage} from "../login/login";
 import {PreferencesPage} from "../preferences/preferences";
 import {RegisterPage} from "../register/register";
-import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import {AuthServiceProvider, User} from "../../providers/auth-service/auth-service";
 
 @Component({
   selector: 'page-home',
@@ -13,8 +13,8 @@ export class HomePage {
   username = '';
   email = '';
 
-  constructor(public navCtrl: NavController,public auth: AuthServiceProvider) {
-    let info = this.auth.getUserInfo();
+  constructor(private navCtrl: NavController,private auth: AuthServiceProvider) {
+    let info = this.auth.getUserInfo() == null ? new User('', '') : this.auth.getUserInfo() ;
     this.username = info['name'];
     this.email = info['email'];
   }

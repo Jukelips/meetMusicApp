@@ -5,6 +5,7 @@ import {
 } from 'ionic-angular';
 import {HomePage} from "../home/home";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import {RegisterPage} from "../register/register";
 
 /**
  * Generated class for the LoginPage page.
@@ -31,14 +32,14 @@ export class LoginPage {
   }
 
   public createAccount() {
-    this.navCtrl.push('RegisterPage');
+    this.navCtrl.push(RegisterPage);
   }
 
   public login() {
     this.showLoading()
     this.auth.login(this.registerCredentials).subscribe(allowed => {
         if (allowed) {
-          this.navCtrl.setRoot('HomePage');
+          this.navCtrl.push(HomePage);
         } else {
           this.showError("Access Denied");
         }
