@@ -15,6 +15,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {RegisterPage} from "../pages/register/register";
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import {HttpClientModule} from "@angular/common/http";
+import { LoginPageModule} from "../pages/login/login.module";
 import { RestServiceProvider } from '../providers/rest-service/rest-service';
 
 @NgModule({
@@ -22,13 +23,14 @@ import { RestServiceProvider } from '../providers/rest-service/rest-service';
     MyApp,
     HomePage,
     ListPage,
-    LoginPage,RegisterPage,
+    RegisterPage,
     PreferencesPage
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    LoginPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
