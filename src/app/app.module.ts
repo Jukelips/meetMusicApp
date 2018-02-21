@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { InAppBrowser} from "@ionic-native/in-app-browser";
 
 
 import { MyApp } from './app.component';
@@ -17,6 +18,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import {HttpClientModule} from "@angular/common/http";
 import { LoginPageModule} from "../pages/login/login.module";
 import { RestServiceProvider } from '../providers/rest-service/rest-service';
+import {HTTP} from "@ionic-native/http";
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { RestServiceProvider } from '../providers/rest-service/rest-service';
     AuthServiceProvider,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    RestServiceProvider
+    RestServiceProvider,
+    InAppBrowser,
+    HTTP
   ]
 })
 export class AppModule {}
