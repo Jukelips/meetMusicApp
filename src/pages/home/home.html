@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Meet'Music</ion-title>
+    <div *ngIf="username !=''">
+    <ion-buttons end >
+      <button (click)="goTo('PreferencesPage')" ion-button icon-only>
+      <ion-icon name="settings"></ion-icon>
+      </button>
+      <button ion-button (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+    </div>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <h3>Meet'Music Menu Starter</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <img src="../../assets/imgs/angularlogo.png"/>
+      </ion-col>
+    </ion-row>
+    <div *ngIf="username !=''">
+    <h3>Welcome inside, {{username}}!</h3>
+      Your Email is: {{email}}
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button color="secondary" (click)="goTo('MpPage')">Messages privés</button>
+        </ion-col>
+      </ion-row>
+    </div>
+    <div *ngIf="username == ''">
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button color="secondary" (click)="goTo('LoginPage')">Se connecter</button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button color="secondary" (click)="goTo('RegisterPage')">S'inscrire</button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-grid>
+</ion-content>
