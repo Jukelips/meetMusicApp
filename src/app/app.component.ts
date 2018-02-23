@@ -9,6 +9,8 @@ import {LoginPage} from "../pages/login/login";
 import {PreferencesPage} from "../pages/preferences/preferences";
 import { RegisterPage } from "../pages/register/register";
 import { AuthServiceProvider } from "../providers/auth-service/auth-service";
+import { MpPage } from "../pages/mp/mp";
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -36,7 +38,8 @@ export class MyApp {
       this.pages = [
         { title: 'Home', component: HomePage },
         { title: 'List', component: ListPage },
-        { title: 'Preferences', component: PreferencesPage }
+        { title: 'Preferences', component: PreferencesPage },
+        { title: 'Messages privés', component: MpPage}
       ];
     }
 

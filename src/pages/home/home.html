@@ -33,21 +33,27 @@
     <div *ngIf="username !=''">
     <h3>Welcome inside, {{username}}!</h3>
       Your Email is: {{email}}
+
       <button ion-button block clear (click)="login()">Spotify connect</button>
       <button ion-button block clear (click)="getUserTop('artists')">get user top</button>
 
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button color="secondary" (click)="goTo('MpPage')">Messages privés</button>
+        </ion-col>
+      </ion-row>
     </div>
-    <ion-row>
-      <ion-col text-center>
-        <button ion-button color="secondary" (click)="goTo('LoginPage')">Se connecter</button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col text-center>
-        <button ion-button color="secondary" (click)="goTo('RegisterPage')">S'inscrire</button>
-      </ion-col>
-    </ion-row>
+    <div *ngIf="username == ''">
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button color="secondary" (click)="goTo('LoginPage')">Se connecter</button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button color="secondary" (click)="goTo('RegisterPage')">S'inscrire</button>
+        </ion-col>
+      </ion-row>
+    </div>
   </ion-grid>
-
-
 </ion-content>

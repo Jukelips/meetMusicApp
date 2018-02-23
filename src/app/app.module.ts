@@ -11,12 +11,12 @@ import { PreferencesPage } from "../pages/preferences/preferences";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import {RegisterPage} from "../pages/register/register";
+import { RegisterPage } from "../pages/register/register";
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
-import {HttpClientModule} from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
 import { LoginPageModule} from "../pages/login/login.module";
 import { RestServiceProvider } from '../providers/rest-service/rest-service';
-
+import { MpPageModule } from "../pages/mp/mp.module";
 
 @NgModule({
   declarations: [
@@ -30,23 +30,24 @@ import { RestServiceProvider } from '../providers/rest-service/rest-service';
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
-    LoginPageModule
+    LoginPageModule,
+    MpPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
     ListPage,
-    PreferencesPage,RegisterPage
+    PreferencesPage,
+    RegisterPage
   ],
   providers: [
     StatusBar,
     AuthServiceProvider,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    RestServiceProvider,
     InAppBrowser,
-
+    RestServiceProvider
   ]
 })
 export class AppModule {}
