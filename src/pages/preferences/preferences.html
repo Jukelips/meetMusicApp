@@ -11,7 +11,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      Preferences
+      Préfèrences
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -19,46 +19,38 @@
 <ion-content class="outer-content">
   <ion-list>
     <ion-list-header>
-      Adjust Display
+      Age
     </ion-list-header>
     <ion-item>
-      <ion-range [(ngModel)]="brightness">
-        <ion-icon range-left small name="sunny"></ion-icon>
-        <ion-icon range-right name="sunny"></ion-icon>
-      </ion-range>
-    </ion-item>
-    <ion-item>
-      <ion-range min="-200" max="200" pin="true" [(ngModel)]="contrast" color="secondary">
-        <ion-icon range-left small name="contrast"></ion-icon>
-        <ion-icon range-right name="contrast"></ion-icon>
-      </ion-range>
-    </ion-item>
-    <ion-item>
-      <ion-range dualKnobs="true" pin="true" [(ngModel)]="structure" color="dark">
-        <ion-icon range-left small name="brush"></ion-icon>
-        <ion-icon range-right name="brush"></ion-icon>
-      </ion-range>
-    </ion-item>
-    <ion-item>
-      <ion-range min="1000" max="2000" step="100" snaps="true" [(ngModel)]="warmth" color="danger">
-        <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
-        <ion-icon range-right color="danger" name="thermometer"></ion-icon>
-      </ion-range>
+        <ion-badge color="primary" item-left>{{this.valueMin}}</ion-badge>
+        <ion-badge color="primary" item-right>{{this.valueMax}}</ion-badge>
+        <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="18" max="80" step="1" (ionChange)="rangeChange($event)"></ion-range>
     </ion-item>
   </ion-list>
 
   <ion-list>
     <ion-list-header>
-      Adjust Text
+      Sexe
     </ion-list-header>
     <ion-item>
-      <ion-range min="-100" step="10" snaps="true" [(ngModel)]="text">
-        <ion-label range-left class="small-text">A</ion-label>
-        <ion-label range-right>A</ion-label>
-      </ion-range>
+      <ion-label>Homme</ion-label>
+      <ion-checkbox color="blue"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Femme</ion-label>
+      <ion-checkbox color="blue"></ion-checkbox>
     </ion-item>
   </ion-list>
+  <ion-row>
+
+    <ion-col text-center>
+        <button center ion-button round color="secondary">Lier votre compte avec Spotify</button>
+    </ion-col>
+
+  </ion-row>
 </ion-content>
+
+
 
 <style>
   ion-list + ion-list {
@@ -68,18 +60,4 @@
     font-size: 10px;
   }
 </style>
-
-© 2018 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-
-Contact GitHub
-API
-Training
-Shop
-Blog
-About
 

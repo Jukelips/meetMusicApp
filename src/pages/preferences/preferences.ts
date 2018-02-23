@@ -20,10 +20,23 @@ export class PreferencesPage {
   warmth: number = 1300;
   structure: any = { lower: 33, upper: 60 };
   text: number = 0;
+  dualValue2 = {lower: 18, upper: 80};
+  valueMin: number;
+  valueMax: number;
+  range: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.valueMin = this.dualValue2.lower;
+    this.valueMax = this.dualValue2.upper;
+
   }
 
+  rangeChange(range: Range) {
+    this.valueMin = this.dualValue2.lower;
+    this.valueMax = this.dualValue2.upper;
+
+
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad PreferencesPage');
   }
