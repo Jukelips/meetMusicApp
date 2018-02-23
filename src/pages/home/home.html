@@ -13,6 +13,7 @@
         <ion-icon name="log-out"></ion-icon>
       </button>
     </ion-buttons>
+
     </div>
   </ion-navbar>
 </ion-header>
@@ -31,7 +32,11 @@
     </ion-row>
     <div *ngIf="username !=''">
     <h3>Welcome inside, {{username}}!</h3>
-      Your Email is: {{email}} </div>
+      Your Email is: {{email}}
+      <button ion-button block clear (click)="login()">Spotify connect</button>
+      <button ion-button block clear (click)="getUserTop('artists')">get user top</button>
+
+    </div>
     <ion-row>
       <ion-col text-center>
         <button ion-button color="secondary" (click)="goTo('LoginPage')">Se connecter</button>
@@ -43,7 +48,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <button ion-button (click)="login()">Spotify Login</button>
-  <button ion-button block clear (click)="openWebpage()">Open Webpage</button>
+
 
 </ion-content>
