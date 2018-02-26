@@ -29,11 +29,11 @@
             </ion-item>
 
             <ion-item>
-              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registration.username" required></ion-input>
+              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registration.password" required></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="registration.password" required></ion-input>
+              <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="registration.username" required></ion-input>
             </ion-item>
 
             <ion-item>
@@ -41,13 +41,13 @@
             </ion-item>
 
             <ion-item>
-              <ion-datetime placeholder="Date de naissance" displayFormat="YYYY-MM-DD" name="birthdate" [(ngModel)]="registration.birthdate"></ion-datetime>
+              <ion-datetime placeholder="Date de naissance" displayFormat="YYYY-MM-DD" name="birthDate" [(ngModel)]="registration.birthDate"></ion-datetime>
             </ion-item>
 
             <ion-item>
-              <ion-select #newSelect name="genre" placeholder="Sexe" [(ngModel)]="registration.genre">
-                <ion-option value=false>Femme</ion-option>
-                <ion-option value=true>Homme</ion-option>
+              <ion-select #newSelect name="gender" placeholder="Sexe" [(ngModel)]="registration.gender">
+                <ion-option value=2>Femme</ion-option>
+                <ion-option value=1>Homme</ion-option>
               </ion-select>
             </ion-item>
 

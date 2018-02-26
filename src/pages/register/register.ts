@@ -21,8 +21,8 @@ export class RegisterPage {
   errors: string;
   isRequesting: boolean;
   submitted: boolean = false;
-  registration: UserRegistration = { username: '', password: '',
-    email:'',phone:'',birthdate:'',gender:1,latitude:"2.2058143",longitude:"48.9016827"  };
+  registration: UserRegistration = { id : '',username: '', password: '',firstName:'',lastName:'',
+    email:'',gender:'',avatarUrl:'',phone:'',birthdate:'',description:'',latitude:'',longitude:''};
 
   constructor(private userService: UserServiceProvider,public navCtrl: NavController,
               public navParams: NavParams, private auth: AuthServiceProvider, private alertCtrl: AlertController) {
@@ -58,8 +58,7 @@ export class RegisterPage {
     value=this.registration;
     if(valid)
     {
-      this.userService.register(value.email,value.username,value.password,
-        value.phone,value.birthdate,value.gender,value.latitude,value.longitude)
+      this.userService.register(value.birthDate,value.email,value.gender,value.password,value.phone,value.username)
         .finally(() => this.isRequesting = false)
         .subscribe(
           result  => {if(result){
@@ -67,7 +66,10 @@ export class RegisterPage {
           }},
           errors =>  this.errors = errors);
     }
+
   }
+
+  //genre avec password et username avec birthdate
 
   /*public register() {
     this.auth.register(this.registerCredentials).subscribe(success => {

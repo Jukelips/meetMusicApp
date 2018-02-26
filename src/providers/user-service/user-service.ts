@@ -56,18 +56,38 @@ export class UserServiceProvider extends BaseServiceProvider {
    "latitude": "1x"
    }*/
 
+/*
+ avatarUrl
+ birthdate	1
+ description	description
+ email	123ERT
+ firstName	ciprian
+ gender	0909090909
+ id
+ lastName	test
+ latitude	2,345678
+ longitude	1,34566
+ password	cipripri
+ username	cipripri@anal.com
+ */
 
-  register(username: string,email: string,
-           password: string, gender: number, phone : string, birthdate: string, longitude: string, latitude: string): Observable<UserRegistration>
+//(value.birthDate,value.email,value.gender,value.password,value.phone,value.username)
+  register(birthDate: string, email: string, gender: number,
+           password: string, phone : string, username: string): Observable<UserRegistration>
   {
-    let id= "00000000-0000-0000-0000-000000000000";
+    console.log("On est dans Register service");//******
+    let id= "";
     let description = "description";
     let firstName = "ciprian";
     let lastName = "test";
     let avatarUrl = "";
-    let body = JSON.stringify({
-      id, username, password, firstName, lastName, email, gender, avatarUrl,
-      phone, birthdate, description, longitude, latitude});
+    let longitude = "1,34566";
+    let latitude = "2,345678"
+    //let body = JSON.stringify({avatarUrl, birthDate, description, email,
+      //firstName, gender, id, lastName, latitude, longitude, password, phone, username});
+
+    let body = JSON.stringify({birthDate, description, email,
+      firstName, gender, lastName, latitude, longitude, password, phone, username});
     return this.http.post('/api' + "/user", body, {headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*'})})
       .map(res => true)
       .catch(this.handleError);
@@ -121,12 +141,48 @@ export interface Credentials {
 }
 
 export interface UserRegistration {
-  username: string;
+  avatarUrl: string;
+  birthDate: string;
+  description: string;
   email: string;
-  password: string;
+  firstName: string;
   gender: number;
-  phone : string;
-  birthdate: string;
-  longitude: string;
+  id: string;
+  lastName: string;
   latitude: string;
+  longitude: string;
+  password: string;
+  phone : string;
+  username: string;
 }
+/*
+ avatarUrl
+ birthdate	1
+ description	description
+ email	123ERT
+ firstName	ciprian
+ gender	0909090909
+ id
+ lastName	test
+ latitude	2,345678
+ longitude	1,34566
+ password	cipripri
+ username	cipripri@anal.com
+ */
+
+
+
+/*{
+ "id": "00000000-0000-0000-0000-000000000000",
+ "username": "ciprian69",
+ "password": "P@ssword",
+ "firstName": "Ciprian",
+ "lastName": "Pintilie",
+ "email": "ciprian@gmail.com",
+ "gender": 1,
+ "avatarUrl": "???",
+ "phone": "1669696969",
+ "birthDate": "1992-04-26T00:00:00",
+ "description": "Back-end 4 life",
+ "longitude": "1x",
+ "latitude": "1x"*/
