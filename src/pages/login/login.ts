@@ -58,11 +58,17 @@ export class LoginPage {
         .subscribe(
           result => {
             if (result) {
-              this.navCtrl.push(HomePage);
               this.auth.isConnected = true;
             }
           },
           error => this.errors = error);
+      this.isRequesting = true;
+      this.userService.getUserDetails()._finally(()=>this.isRequesting = false).subscribe(result =>{
+        if(result){
+          this.auth.setUserInfo(result.username,result.email);
+          this.navCtrl.push(HomePage);
+        }
+      })
     }
 
   }
