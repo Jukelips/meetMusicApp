@@ -39,52 +39,14 @@ export class UserServiceProvider extends BaseServiceProvider {
     this.baseUrl = configService.getApiURI();
   }
 
-  /**proxy**/
-  /*{
-   "id": "00000000-0000-0000-0000-000000000000",
-   "username": "ciprian69",
-   "password": "P@ssword",
-   "firstName": "Ciprian",
-   "lastName": "Pintilie",
-   "email": "ciprian@gmail.com",
-   "gender": 1,
-   "avatarUrl": "???",
-   "phone": "1669696969",
-   "birthDate": "1992-04-26T00:00:00",
-   "description": "Back-end 4 life",
-   "longitude": "1x",
-   "latitude": "1x"
-   }*/
-
-/*
- avatarUrl
- birthdate	1
- description	description
- email	123ERT
- firstName	ciprian
- gender	0909090909
- id
- lastName	test
- latitude	2,345678
- longitude	1,34566
- password	cipripri
- username	cipripri@anal.com
- */
-
-//(value.birthDate,value.email,value.gender,value.password,value.phone,value.username)
   register(birthDate: string, email: string, gender: number,
            password: string, phone : string, username: string): Observable<UserRegistration>
   {
-    console.log("On est dans Register service");//******
-    let id= "";
     let description = "description";
     let firstName = "ciprian";
     let lastName = "test";
-    let avatarUrl = "";
     let longitude = "1,34566";
-    let latitude = "2,345678"
-    //let body = JSON.stringify({avatarUrl, birthDate, description, email,
-      //firstName, gender, id, lastName, latitude, longitude, password, phone, username});
+    let latitude = "2,345678";
 
     let body = JSON.stringify({birthDate, description, email,
       firstName, gender, lastName, latitude, longitude, password, phone, username});
@@ -93,10 +55,7 @@ export class UserServiceProvider extends BaseServiceProvider {
       .catch(this.handleError);
   }
 
-
-  /*https://forum.ionicframework.com/t/http-post-not-sending-data/47452/7*/
   login(username, password){
-    console.log("On est dans Login service");//******
     let body = { username, password };
     return this.http
       .post(
@@ -104,7 +63,6 @@ export class UserServiceProvider extends BaseServiceProvider {
         JSON.stringify(body),  {headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*'})})
       .map((response: Response) => {
         localStorage.setItem('token', response);
-        console.log("response.toString() : " + response);
         this.loggedIn = true;
         this._authNavStatusSource.next(true);
         return true;
@@ -123,16 +81,13 @@ export class UserServiceProvider extends BaseServiceProvider {
   }
 
   // si on veut afficher les infos pour un user usr sa page profil.
-  /*getUserDetails(): Observable<UserRegistration> {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
+  getUserDetails(): Observable<UserRegistration> {
+    console.log("User details method");
     let authToken = localStorage.getItem('token');
-    headers.append('Authorization', `Bearer ${authToken}`);
-
-    return this.http.get(this.baseUrl + "/user",{headers})
-      .map(res => res.json())
+    console.log(authToken);
+    return this.http.get('/api' + "/user",{headers: new HttpHeaders({'Content-Type': 'application/json','Access-Control-Allow-Origin':'*','Authorization':'Bearer '+ {authToken}})})
       .catch(this.handleError);
-  }*/
+  }
 }
 
 export interface Credentials {
@@ -155,34 +110,3 @@ export interface UserRegistration {
   phone : string;
   username: string;
 }
-/*
- avatarUrl
- birthdate	1
- description	description
- email	123ERT
- firstName	ciprian
- gender	0909090909
- id
- lastName	test
- latitude	2,345678
- longitude	1,34566
- password	cipripri
- username	cipripri@anal.com
- */
-
-
-
-/*{
- "id": "00000000-0000-0000-0000-000000000000",
- "username": "ciprian69",
- "password": "P@ssword",
- "firstName": "Ciprian",
- "lastName": "Pintilie",
- "email": "ciprian@gmail.com",
- "gender": 1,
- "avatarUrl": "???",
- "phone": "1669696969",
- "birthDate": "1992-04-26T00:00:00",
- "description": "Back-end 4 life",
- "longitude": "1x",
- "latitude": "1x"*/

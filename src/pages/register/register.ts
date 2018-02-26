@@ -21,10 +21,12 @@ export class RegisterPage {
   errors: string;
   isRequesting: boolean;
   submitted: boolean = false;
-  registration: UserRegistration = { id : '',username: '', password: '',firstName:'',lastName:'',
-    email:'',gender:'',avatarUrl:'',phone:'',birthdate:'',description:'',latitude:'',longitude:''};
+  registration: UserRegistration = {
+    id: '', username: '', password: '', firstName: '', lastName: '',
+    email: '', gender:null, avatarUrl: '', phone: '', birthDate: null, description: '', latitude: '', longitude: ''
+  };
 
-  constructor(private userService: UserServiceProvider,public navCtrl: NavController,
+  constructor(private userService: UserServiceProvider, public navCtrl: NavController,
               public navParams: NavParams, private auth: AuthServiceProvider, private alertCtrl: AlertController) {
   }
 
@@ -32,75 +34,24 @@ export class RegisterPage {
     console.log('ionViewDidLoad RegisterPage');
   }
 
-
-  /**Header a envoyer pour inscription**/
-  /*{
-   "id": "00000000-0000-0000-0000-000000000000",
-   "username": "ciprian69",
-   "password": "P@ssword",
-   "firstName": "Ciprian",
-   "lastName": "Pintilie",
-   "email": "ciprian@gmail.com",
-   "gender": 1,
-   "avatarUrl": "???",
-   "phone": "1669696969",
-   "birthDate": "1992-04-26T00:00:00",
-   "description": "Back-end 4 life",
-   "longitude": "1x",
-   "latitude": "1x"
-   }*/
-  registerUser({ value, valid }: { value: UserRegistration, valid: boolean })
-  {
+  registerUser({value, valid}: { value: UserRegistration, valid: boolean }) {
     this.submitted = true;
     this.isRequesting = true;
-    this.errors='';
+    this.errors = '';
     valid = this.submitted;
-    value=this.registration;
-    if(valid)
-    {
-      this.userService.register(value.birthDate,value.email,value.gender,value.password,value.phone,value.username)
+    value = this.registration;
+    if (valid) {
+      this.userService.register(value.birthDate, value.email, value.gender, value.password, value.phone, value.username)
         .finally(() => this.isRequesting = false)
         .subscribe(
-          result  => {if(result){
-            this.navCtrl.push(LoginPage,{queryParams: {brandNew: true,email:value.email}});
-          }},
-          errors =>  this.errors = errors);
+          result => {
+            if (result) {
+              this.navCtrl.push(LoginPage, {queryParams: {username: value.username}});
+            }
+          },
+          errors => this.errors = errors);
     }
 
   }
-
-  //genre avec password et username avec birthdate
-
-  /*public register() {
-    this.auth.register(this.registerCredentials).subscribe(success => {
-        if (success) {
-          this.createSuccess = true;
-          this.showPopup("Success", "Compte créé");
-        } else {
-          this.showPopup("Error", "Un problème est survenue lros de la création du compte");
-        }
-      },
-      error => {
-        this.showPopup("Error", error);
-      });
-  }*/
-
- /* public showPopup(title, text){
-    let alert = this.alertCtrl.create({
-      title: title,
-      subTitle: text,
-      buttons: [
-        {
-          text: 'OK',
-          handler: data => {
-            if (this.createSuccess) {
-              this.navCtrl.popToRoot();
-            }
-          }
-        }
-      ]
-    });
-    alert.present();
-  }*/
 
 }

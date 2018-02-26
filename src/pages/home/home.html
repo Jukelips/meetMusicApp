@@ -29,20 +29,15 @@
         <img src="../../assets/imgs/angularlogo.png"/>
       </ion-col>
     </ion-row>
-    <div *ngIf="username !=''">
+    <div *ngIf="connect">
     <h3>Welcome inside, {{username}}!</h3>
-      Your Email is: {{email}} </div>
+    </div>
     <ion-row>
       <ion-col text-center>
-        <button ion-button color="secondary" (click)="goTo('LoginPage')">Se connecter</button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col text-center>
-        <button ion-button color="secondary" (click)="goTo('RegisterPage')">S'inscrire</button>
+        <button ion-button color="secondary" *ngIf="!connect" (click)="goTo('LoginPage')">Se connecter</button>
+        <button ion-button color="secondary" *ngIf="connect"(click)="goTo('ProfilPage')">Profil</button>
+        <button ion-button color="secondary" *ngIf="!connect" (click)="goTo('RegisterPage')">S'inscrire</button>
       </ion-col>
     </ion-row>
   </ion-grid>
-
-
 </ion-content>

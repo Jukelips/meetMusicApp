@@ -4,19 +4,27 @@ import {LoginPage} from "../login/login";
 import {PreferencesPage} from "../preferences/preferences";
 import {RegisterPage} from "../register/register";
 import {AuthServiceProvider, User} from "../../providers/auth-service/auth-service";
+import {ProfilPage} from "../profil/profil";
+import {UserRegistration, UserServiceProvider} from "../../providers/user-service/user-service";
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+  connect : boolean;
   username = '';
-  email = '';
+  currentUser: UserRegistration = {
+    id: '', username: '', password: '', firstName: '', lastName: '',
+    email: '', gender: '', avatarUrl: '', phone: '', birthdate: '', description: '', latitude: '', longitude: ''
+  };
 
-  constructor(private navCtrl: NavController,private auth: AuthServiceProvider) {
-    let info = this.auth.getUserInfo() == null ? new User('', '') : this.auth.getUserInfo() ;
-    this.username = info['name'];
-    this.email = info['email'];
+
+  constructor(private navCtrl: NavController, user : UserServiceProvider) {
+    //let info = this.auth.getUserInfo() == null ? new User('', '') : this.auth.getUserInfo() ;
+    this.currentUser = user.getUserDetails();
+    this.username = this.currentUser.username;
+    this.connect = auth.isConnected;
   }
 
   goTo(page) {
@@ -28,6 +36,8 @@ export class HomePage {
       this.navCtrl.push(RegisterPage);
     }else if (page === 'HomePage') {
       this.navCtrl.push(HomePage);
+    }else if (page === 'ProfilPage') {
+      this.navCtrl.push(ProfilPage);
     }
 
   }
@@ -39,9 +49,7 @@ export class HomePage {
   }
 
   public logout() {
-    this.auth.logout().subscribe(succ => {
-      this.navCtrl.setRoot('LoginPage')
-    });
+    this.user.logout();
   }
 
 
