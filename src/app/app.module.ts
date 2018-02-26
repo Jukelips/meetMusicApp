@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { InAppBrowser} from "@ionic-native/in-app-browser";
-
+import 'rxjs/add/operator/map';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
@@ -17,6 +17,10 @@ import { HttpClientModule } from "@angular/common/http";
 import { LoginPageModule} from "../pages/login/login.module";
 import { RestServiceProvider } from '../providers/rest-service/rest-service';
 import { MpPageModule } from "../pages/mp/mp.module";
+import {ProfilPage} from "../pages/profil/profil";
+import { UserServiceProvider } from '../providers/user-service/user-service';
+import { ConfigServiceProvider } from '../providers/config-service/config-service';
+import { BaseServiceProvider } from '../providers/base-service/base-service';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,8 @@ import { MpPageModule } from "../pages/mp/mp.module";
     HomePage,
     ListPage,
     RegisterPage,
-    PreferencesPage
+    PreferencesPage,
+    ProfilPage
   ],
   imports: [
     BrowserModule,
@@ -39,7 +44,9 @@ import { MpPageModule } from "../pages/mp/mp.module";
     HomePage,
     ListPage,
     PreferencesPage,
-    RegisterPage
+
+    RegisterPage,
+    ProfilPage
   ],
   providers: [
     StatusBar,
@@ -47,7 +54,10 @@ import { MpPageModule } from "../pages/mp/mp.module";
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     InAppBrowser,
-    RestServiceProvider
+    RestServiceProvider,
+    UserServiceProvider,
+    ConfigServiceProvider,
+    BaseServiceProvider
   ]
 })
 export class AppModule {}
