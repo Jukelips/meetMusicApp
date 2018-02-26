@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import {LoginPage} from "../login/login";
+import {UserRegistration, UserServiceProvider} from '../../providers/user-service/user-service';
 
 /**
  * Generated class for the RegisterPage page.
@@ -15,17 +17,59 @@ import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
   templateUrl: 'register.html',
 })
 export class RegisterPage {
-  createSuccess = false;
-  registerCredentials = { email: '', password: '' };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthServiceProvider, private alertCtrl: AlertController) {
+  errors: string;
+  isRequesting: boolean;
+  submitted: boolean = false;
+  registration: UserRegistration = { username: '', password: '',
+    email:'',phone:'',birthdate:'',gender:1,latitude:"2.2058143",longitude:"48.9016827"  };
+
+  constructor(private userService: UserServiceProvider,public navCtrl: NavController,
+              public navParams: NavParams, private auth: AuthServiceProvider, private alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
   }
 
-  public register() {
+
+  /**Header a envoyer pour inscription**/
+  /*{
+   "id": "00000000-0000-0000-0000-000000000000",
+   "username": "ciprian69",
+   "password": "P@ssword",
+   "firstName": "Ciprian",
+   "lastName": "Pintilie",
+   "email": "ciprian@gmail.com",
+   "gender": 1,
+   "avatarUrl": "???",
+   "phone": "1669696969",
+   "birthDate": "1992-04-26T00:00:00",
+   "description": "Back-end 4 life",
+   "longitude": "1x",
+   "latitude": "1x"
+   }*/
+  registerUser({ value, valid }: { value: UserRegistration, valid: boolean })
+  {
+    this.submitted = true;
+    this.isRequesting = true;
+    this.errors='';
+    valid = this.submitted;
+    value=this.registration;
+    if(valid)
+    {
+      this.userService.register(value.email,value.username,value.password,
+        value.phone,value.birthdate,value.gender,value.latitude,value.longitude)
+        .finally(() => this.isRequesting = false)
+        .subscribe(
+          result  => {if(result){
+            this.navCtrl.push(LoginPage,{queryParams: {brandNew: true,email:value.email}});
+          }},
+          errors =>  this.errors = errors);
+    }
+  }
+
+  /*public register() {
     this.auth.register(this.registerCredentials).subscribe(success => {
         if (success) {
           this.createSuccess = true;
@@ -37,9 +81,9 @@ export class RegisterPage {
       error => {
         this.showPopup("Error", error);
       });
-  }
+  }*/
 
-  showPopup(title, text) {
+ /* public showPopup(title, text){
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: text,
@@ -55,6 +99,6 @@ export class RegisterPage {
       ]
     });
     alert.present();
-  }
+  }*/
 
 }

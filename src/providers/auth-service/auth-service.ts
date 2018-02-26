@@ -25,8 +25,6 @@ export class User{
 @Injectable()
 export class AuthServiceProvider {
 
-
-
   currentUser: User;
   isConnected : boolean;
 
@@ -47,7 +45,6 @@ export class AuthServiceProvider {
         observer.next(access);
         observer.complete();
       });
-
     }
   }
 
@@ -68,9 +65,9 @@ export class AuthServiceProvider {
   }
 
   public logout() {
-    this.isConnected = false;
     return Observable.create(observer => {
       this.currentUser = null;
+      this.isConnected = false;
       observer.next(true);
       observer.complete();
     });

@@ -4,5 +4,12 @@
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://54.38.33.198/api",
+      "rejectUnauthorized": false
+    }
+  ]
 }

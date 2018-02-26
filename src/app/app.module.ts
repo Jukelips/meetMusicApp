@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import 'rxjs/add/operator/map';
 
 
 import { MyApp } from './app.component';
@@ -17,6 +18,10 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import {HttpClientModule} from "@angular/common/http";
 import { LoginPageModule} from "../pages/login/login.module";
 import { RestServiceProvider } from '../providers/rest-service/rest-service';
+import {ProfilPage} from "../pages/profil/profil";
+import { UserServiceProvider } from '../providers/user-service/user-service';
+import { ConfigServiceProvider } from '../providers/config-service/config-service';
+import { BaseServiceProvider } from '../providers/base-service/base-service';
 
 @NgModule({
   declarations: [
@@ -24,7 +29,8 @@ import { RestServiceProvider } from '../providers/rest-service/rest-service';
     HomePage,
     ListPage,
     RegisterPage,
-    PreferencesPage
+    PreferencesPage,
+    ProfilPage
   ],
   imports: [
     BrowserModule,
@@ -37,14 +43,19 @@ import { RestServiceProvider } from '../providers/rest-service/rest-service';
     MyApp,
     HomePage,
     ListPage,
-    PreferencesPage,RegisterPage
+    PreferencesPage,
+    RegisterPage,
+    ProfilPage
   ],
   providers: [
     StatusBar,
     AuthServiceProvider,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    RestServiceProvider
+    RestServiceProvider,
+    UserServiceProvider,
+    ConfigServiceProvider,
+    BaseServiceProvider
   ]
 })
 export class AppModule {}

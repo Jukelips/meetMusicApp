@@ -6,6 +6,8 @@ import {
 import {HomePage} from "../home/home";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {RegisterPage} from "../register/register";
+import {Credentials, UserServiceProvider} from '../../providers/user-service/user-service';
+import { Subscription } from 'rxjs';
 
 /**
  * Generated class for the LoginPage page.
@@ -20,22 +22,57 @@ import {RegisterPage} from "../register/register";
   templateUrl: 'login.html',
 })
 
-
 export class LoginPage {
-  //login: LoginPage;
+  brandNew: boolean;
   loading: Loading;
-  registerCredentials = { email: '', password: '' };
+  errors: string;
+  isRequesting: boolean;
+  submitted: boolean = false;
+  credentials: Credentials = { username: '', password: '' };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(private userService: UserServiceProvider,public navCtrl: NavController, public navParams: NavParams,
               menuCtrl : MenuController, private auth :  AuthServiceProvider,
               private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+    console.log("constructor login");
   }
+
+  /*destroy() {
+    // prevent memory leak by unsubscribing
+    this.subscription.unsubscribe();
+  }*/
+
+
+  login({ value, valid }: { value: Credentials, valid: boolean }) {
+    console.log("On est dans login");
+    console.log("Credentials username : " + this.credentials.username + "\n password : " + this.credentials.password + " Valid :" + valid );
+    this.submitted = true;
+    this.isRequesting = true;
+    this.errors='';
+    value = this.credentials;
+    valid = true;
+    if (valid) {
+      console.log("On est dans valide login");
+      console.log("username : " + value.username + "\n password : " + value.password + " Valid :" + valid );
+      this.userService.login(value.username, value.password)
+        .finally(() => this.isRequesting = false)
+        .subscribe(
+          result => {
+            if (result) {
+              this.navCtrl.push(HomePage);
+              this.auth.isConnected = true;
+            }
+          },
+          error => this.errors = error);
+    }
+
+  }
+
 
   public createAccount() {
     this.navCtrl.push(RegisterPage);
   }
 
-  public login() {
+  /*public login() {
     this.showLoading()
     this.auth.login(this.registerCredentials).subscribe(allowed => {
         if (allowed) {
@@ -70,7 +107,7 @@ export class LoginPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-  }
+  }*/
 
   goTo(page) {
     if (page === 'HomePage') {
