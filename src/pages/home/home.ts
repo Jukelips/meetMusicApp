@@ -5,7 +5,7 @@ import {PreferencesPage} from "../preferences/preferences";
 import {RegisterPage} from "../register/register";
 import {AuthServiceProvider, User} from "../../providers/auth-service/auth-service";
 import { InAppBrowser,InAppBrowserOptions  } from '@ionic-native/in-app-browser';
-import {HttpClient,HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 
 //var client_id = 'db770f92f6ef4f3f87df6c6ec279c934'; // Your client id
 //var client_secret = '3246f992f0ec4c3fa71410ef32cf0bda'; // Your secret
@@ -55,12 +55,6 @@ export class HomePage {
   }
 
   public login() {
-    const headers = new HttpHeaders().set('Authorization','Basic ')
-      .append('Content-Type',  'application/json')
-      .append( 'Access-Control-Allow-Origin','*')
-      .append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-
-    console.log(JSON.stringify(headers));
     if(this.platform.ready()){
        this.openWebpage();
     }
@@ -112,15 +106,16 @@ export class HomePage {
   getUserTop(type){
     let userData;
     if(token !=null){
-    this.http.get('https://api.spotify.com/v1/me/top/'+type+'?limit=50',{headers :{'Authorization':'Bearer ' + token}}).subscribe((evt : UserData)=>{
-      for(var i=0; i<50;i++) {
+    this.http.get('https://api.spotify.com/v1/me/top/'+type+'?limit=1',{headers :{'Authorization':'Bearer ' + token}}).subscribe((evt : UserData)=>{
+      for(var i=0; i<1;i++) {
         console.log(evt.items[i].name);
         for(var j=0;j<evt.items[i].genres.length;j++){
           console.log(" - "+ evt.items[i].genres[j]);
         }
         console.log ("");
       }
-      userData = evt;
+      userData = evt.items;
+
     })
    }else{
       console.log("tu dois te co");
