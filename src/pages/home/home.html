@@ -30,12 +30,13 @@
         <img src="../../assets/imgs/angularlogo.png"/>
       </ion-col>
     </ion-row>
-    <button ion-button block clear (click)="login()">Spotify connect</button>
-    <button ion-button block clear (click)="getUserTop('artists')">get user top</button>
+
 
     <div *ngIf="username !=''">
     <h3>Welcome inside, {{username}}!</h3>
       Your Email is: {{email}}
+      <button ion-button block clear (click)="login()">Spotify connect</button>
+      <button ion-button block clear (click)="getUserTop('artists')">get user top</button>
 
 
       <ion-row>

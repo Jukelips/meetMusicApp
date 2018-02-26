@@ -22,7 +22,7 @@ export class RegisterPage {
   isRequesting: boolean;
   submitted: boolean = false;
   registration: UserRegistration = { id : '',username: '', password: '',firstName:'',lastName:'',
-    email:'',gender: null ,avatarUrl:'',phone:'',birthDate:'',description:'',latitude:'',longitude:''};
+    email:'',gender: null,avatarUrl:'',phone:'',birthDate:'',description:'',latitude:'',longitude:''};
 
   constructor(private userService: UserServiceProvider,public navCtrl: NavController,
               public navParams: NavParams, private auth: AuthServiceProvider, private alertCtrl: AlertController) {

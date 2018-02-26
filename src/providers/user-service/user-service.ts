@@ -102,7 +102,7 @@ export class UserServiceProvider extends BaseServiceProvider {
       .post(
         '/api' + "/token",
         JSON.stringify(body),  {headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*'})})
-      .map((response: Response) => {
+      .map((response: string) => {
         localStorage.setItem('token', response);
         console.log("response.toString() : " + response);
         this.loggedIn = true;

@@ -50,15 +50,15 @@
                 <ion-option value=1>Homme</ion-option>
               </ion-select>
             </ion-item>
-
-            <ion-item>
-              <ion-input type="password" placeholder="Confirm password" name="password2" [(ngModel)]="registerCredentials.password2" required></ion-input>
-            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
       <ion-row>
         <ion-col class="signup-col">
           <button ion-button class="submit-btn" type="submit" [disabled]="!registerForm.form.valid">S'inscrire</button>
         </ion-col>
       </ion-row>
+
     </form>
   </div>
 </ion-content>
