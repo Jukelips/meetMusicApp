@@ -6,8 +6,11 @@
   </ion-header>
 
   <ion-content>
+    <div align="center"><button menu-toggle="right" class="button button-icon icon" style=" border: 0;"><img src="../../assets/imgs/1-ULvG9TOYi1LzHb7ogMuZJw.jpeg" height="38px"></button>
+    </div>
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon name="{{p.icon}}" item-left></ion-icon>
         {{p.title}}
       </button>
     </ion-list>

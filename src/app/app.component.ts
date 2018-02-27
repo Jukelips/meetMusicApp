@@ -30,19 +30,18 @@ export class MyApp {
 
     if (auth.isConnected == false) {
       this.pages = [
-        { title: 'Home', component: HomePage },
-        {title: 'Se connecter', component: LoginPage},
-        { title: 'Profil', component: ProfilPage },
-        {title: 'Inscription', component: RegisterPage},
-        { title: 'Preferences', component: PreferencesPage }
+        { title: 'Home', icon: 'md-home', component: HomePage },
+        {title: 'Se connecter', icon:'lock', component: LoginPage},
+        { title: 'Profil', icon:'md-contact', component: ProfilPage },
+        {title: 'Inscription', icon:'md-create', component: RegisterPage},
+        { title: 'Preferences', icon: 'md-settings', component: PreferencesPage }
       ];
     } else {
       this.pages = [
-        { title: 'Home', component: HomePage },
-        { title: 'Profil', component: ProfilPage },
-        { title: 'List', component: ListPage },
-        { title: 'Preferences', component: PreferencesPage },
-        { title: 'Messages privés', component: MpPage}
+        { title: 'Home', icon: 'md-home', component: HomePage },
+        { title: 'Profil', icon:'md-contact', component: ProfilPage },
+        { title: 'Preferences',icon: 'md-settings', component: PreferencesPage },
+        { title: 'Messages privés', icon:'md-mail', component: MpPage}
 
       ];
     }
