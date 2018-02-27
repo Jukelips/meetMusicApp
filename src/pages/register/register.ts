@@ -28,6 +28,7 @@ export class RegisterPage {
 
   constructor(private userService: UserServiceProvider, public navCtrl: NavController,
               public navParams: NavParams, private auth: AuthServiceProvider, private alertCtrl: AlertController) {
+    this.registration.username = navParams.get('queryParams');
   }
 
   ionViewDidLoad() {
@@ -41,6 +42,7 @@ export class RegisterPage {
     valid = this.submitted;
     value = this.registration;
     if (valid) {
+
       this.userService.register(value.birthDate, value.email, value.gender, value.password, value.phone, value.username)
         .finally(() => this.isRequesting = false)
         .subscribe(

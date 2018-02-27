@@ -24,8 +24,10 @@ export class ProfilPage {
   constructor(private userService: UserServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
     console.log("Constructeur Profil");
     console.log("currentUser : " + this.currentUser);
-    this.currentUser = this.userService.getUserDetails();
     console.log("currentUser 2 : " + this.currentUser.toString());
+    userService.getUserDetails();
+    let userData = localStorage.getItem('data');
+    console.log(userData);
   }
 
   ionViewDidLoad() {

@@ -7,6 +7,8 @@ import {ConfigServiceProvider} from "../config-service/config-service";
 import 'rxjs/add/operator/map';
 //import {Header} from "ionic-angular";
 import {Headers, RequestOptions} from "@angular/http";
+import {HomePage} from "../../pages/home/home";
+import {NavController} from "ionic-angular";
 /*
   Generated class for the UserServiceProvider provider.
 
@@ -86,6 +88,9 @@ export class UserServiceProvider extends BaseServiceProvider {
     let authToken = localStorage.getItem('token');
     console.log(authToken);
     return this.http.get('/api' + "/user",{headers: new HttpHeaders({'Content-Type': 'application/json','Access-Control-Allow-Origin':'*','Authorization':'Bearer '+ {authToken}})})
+      .map((response: Response) => {
+        localStorage.setItem('data', response);
+      })
       .catch(this.handleError);
   }
 }

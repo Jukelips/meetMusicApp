@@ -14,17 +14,19 @@ import {UserRegistration, UserServiceProvider} from "../../providers/user-servic
 export class HomePage {
   connect : boolean;
   username = '';
+  user: any;
   currentUser: UserRegistration = {
     id: '', username: '', password: '', firstName: '', lastName: '',
     email: '', gender: '', avatarUrl: '', phone: '', birthdate: '', description: '', latitude: '', longitude: ''
   };
 
 
-  constructor(private navCtrl: NavController, user : UserServiceProvider) {
+  constructor(private navCtrl: NavController, userProvider : UserServiceProvider) {
     //let info = this.auth.getUserInfo() == null ? new User('', '') : this.auth.getUserInfo() ;
-    this.currentUser = user.getUserDetails();
+    this.currentUser = userProvider.getUserDetails();
     this.username = this.currentUser.username;
-    this.connect = auth.isConnected;
+    this.connect = userProvider.isLoggedIn();
+    this.user = userProvider;
   }
 
   goTo(page) {
@@ -39,7 +41,6 @@ export class HomePage {
     }else if (page === 'ProfilPage') {
       this.navCtrl.push(ProfilPage);
     }
-
   }
 
   back() {
@@ -50,7 +51,7 @@ export class HomePage {
 
   public logout() {
     this.user.logout();
+    this.navCtrl.push(HomePage);
   }
-
 
 }
