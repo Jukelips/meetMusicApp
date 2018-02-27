@@ -102,9 +102,10 @@ export class UserServiceProvider extends BaseServiceProvider {
       .post(
         '/api' + "/token",
         JSON.stringify(body),  {headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*'})})
-      .map((response: string) => {
-        localStorage.setItem('token', response);
-        console.log("response.toString() : " + response);
+      .map((response : leToken ) => {
+
+        localStorage.setItem('token', response.token);
+
         this.loggedIn = true;
         this._authNavStatusSource.next(true);
         return true;
@@ -123,16 +124,26 @@ export class UserServiceProvider extends BaseServiceProvider {
   }
 
   // si on veut afficher les infos pour un user usr sa page profil.
-  /*getUserDetails(): Observable<UserRegistration> {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    let authToken = localStorage.getItem('token');
-    headers.append('Authorization', `Bearer ${authToken}`);
+  getUserDetails(): Observable<UserRegistration> {
+    console.log("on est dans userdetails");
 
-    return this.http.get(this.baseUrl + "/user",{headers})
-      .map(res => res.json())
+    let authToken = localStorage.getItem('token');
+    console.log(authToken);
+    let base64 =localStorage.getItem('token');
+    let tabToken =base64.split('.');
+    let base64todecod = tabToken[0]+tabToken[1];
+    let userId = atob(base64todecod);
+
+    console.log(userId);
+    let idUser =userId.match("\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}");
+    console.log(idUser);
+    return this.http.get( "/api/user/"+ idUser,{headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*','Authorization' : 'Bearer '+ authToken})})
+      .map((res) => {
+        console.log(JSON.stringify(res));
+        return res;
+      })
       .catch(this.handleError);
-  }*/
+  }
 }
 
 export interface Credentials {
@@ -186,3 +197,6 @@ export interface UserRegistration {
  "description": "Back-end 4 life",
  "longitude": "1x",
  "latitude": "1x"*/
+interface leToken {
+  token : string
+}

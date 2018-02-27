@@ -31,6 +31,7 @@ export class AuthServiceProvider {
   constructor(public http: HttpClient) {
     console.log('Hello AuthServiceProvider Provider');
     this.isConnected = false;
+    this.currentUser = new User('','');
   }
 
   public login(credentials) {
@@ -62,6 +63,11 @@ export class AuthServiceProvider {
 
   public getUserInfo() : User {
     return this.currentUser;
+  }
+
+  public setUserInfo( name,  email){
+    this.currentUser.name = name;
+    this.currentUser.email = email;
   }
 
   public logout() {
