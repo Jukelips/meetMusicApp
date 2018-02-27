@@ -11,6 +11,8 @@ import {HttpClient} from "@angular/common/http";
 //var client_secret = '3246f992f0ec4c3fa71410ef32cf0bda'; // Your secret
 var token;
 import { MpPage } from "../mp/mp";
+import {UserServiceProvider} from "../../providers/user-service/user-service";
+import {ProfilPage} from "../profil/profil";
 
 @Component({
   selector: 'page-home',
@@ -19,12 +21,10 @@ import { MpPage } from "../mp/mp";
 export class HomePage {
   username = '';
   email = '';
+  connect : boolean;
 
-  constructor(private http: HttpClient,private inAppBrowser : InAppBrowser,private platform : Platform,private navCtrl: NavController,private auth: AuthServiceProvider) {
-
-    let info = this.auth.getUserInfo() == null ? new User('', '') : this.auth.getUserInfo() ;
-    this.username = info['name'];
-    this.email = info['email'];
+  constructor(private http: HttpClient,private inAppBrowser : InAppBrowser,private platform : Platform,private navCtrl: NavController, private userProvider : UserServiceProvider) {
+    this.connect = userProvider.isLoggedIn();
   }
 
   goTo(page) {
@@ -36,6 +36,8 @@ export class HomePage {
       this.navCtrl.push(RegisterPage);
     }else if (page === 'HomePage') {
       this.navCtrl.push(HomePage);
+    }else if (page === 'ProfilPage') {
+      this.navCtrl.push(ProfilPage);
     }else if (page === 'MpPage') {
       this.navCtrl.push(MpPage);
     }
@@ -49,9 +51,8 @@ export class HomePage {
   }
 
   public logout() {
-    this.auth.logout().subscribe(succ => {
-      this.navCtrl.setRoot('LoginPage')
-    });
+    this.userProvider.logout();
+    this.navCtrl.push(HomePage);
   }
 
   public login() {
