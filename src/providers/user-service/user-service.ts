@@ -107,6 +107,7 @@ export class UserServiceProvider extends BaseServiceProvider {
         localStorage.setItem('token', response.token);
 
         this.loggedIn = true;
+        console.log("loggedin  "+ this.loggedIn);
         this._authNavStatusSource.next(true);
         return true;
       })

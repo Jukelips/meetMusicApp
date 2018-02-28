@@ -4,14 +4,13 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import {LoginPage} from "../pages/login/login";
 import {PreferencesPage} from "../pages/preferences/preferences";
 import { RegisterPage } from "../pages/register/register";
-import { AuthServiceProvider } from "../providers/auth-service/auth-service";
 import { MpPage } from "../pages/mp/mp";
 import {ProfilPage} from "../pages/profil/profil";
 import 'rxjs/add/operator/map';
+import {UserServiceProvider} from "../providers/user-service/user-service";
 
 @Component({
   templateUrl: 'app.html'
@@ -24,11 +23,11 @@ export class MyApp {
 
   pages: Array<{title: string, icon: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private auth: AuthServiceProvider) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private userProvider: UserServiceProvider) {
     this.initializeApp();
     //process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-    if (auth.isConnected == false) {
+    if (userProvider.isLoggedIn() == false) {
       this.pages = [
         { title: 'Home', icon: 'md-home', component: HomePage },
         {title: 'Se connecter', icon:'lock', component: LoginPage},

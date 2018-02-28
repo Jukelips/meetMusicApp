@@ -4,7 +4,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Meet'Music</ion-title>
-    <div *ngIf="username !=''">
+    <div *ngIf="connect">
     <ion-buttons end >
       <button (click)="goTo('PreferencesPage')" ion-button icon-only>
       <ion-icon name="settings"></ion-icon>
@@ -32,30 +32,20 @@
     </ion-row>
 
 
-    <div *ngIf="username !=''">
+    <div *ngIf="connect">
     <h3>Welcome inside, {{username}}!</h3>
       Your Email is: {{email}}
       <button ion-button block clear (click)="login()">Spotify connect</button>
       <button ion-button block clear (click)="getUserTop('artists')">get user top</button>
-
-
-      <ion-row>
-        <ion-col text-center>
-          <button ion-button color="secondary" (click)="goTo('MpPage')">Messages privés</button>
-        </ion-col>
-      </ion-row>
     </div>
-    <div *ngIf="username == ''">
-      <ion-row>
-        <ion-col text-center>
-          <button ion-button color="secondary" (click)="goTo('LoginPage')">Se connecter</button>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col text-center>
-          <button ion-button color="secondary" (click)="goTo('RegisterPage')">S'inscrire</button>
-        </ion-col>
-      </ion-row>
-    </div>
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button color="secondary" *ngIf="!connect" (click)="goTo('LoginPage')">Se connecter</button>
+        <button ion-button color="secondary" *ngIf="connect"(click)="goTo('ProfilPage')">Profil</button>
+        <button ion-button color="secondary" *ngIf="!connect" (click)="goTo('RegisterPage')">S'inscrire</button>
+        <button ion-button color="secondary" *ngIf="connect" (click)="goTo('MpPage')">Messages privés</button>
+      </ion-col>
+    </ion-row>
+
   </ion-grid>
 </ion-content>

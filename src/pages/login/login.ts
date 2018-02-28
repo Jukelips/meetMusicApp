@@ -61,15 +61,16 @@ export class LoginPage {
               this.auth.isConnected = true;
             }
           },
-          error => this.errors = error);
+          error => this.errors = "Identifiants invalides");
       this.isRequesting = true;
+      if(this.userService.isLoggedIn()){
       this.userService.getUserDetails()._finally(()=>this.isRequesting = false).subscribe(result =>{
         if(result){
           this.auth.setUserInfo(result.username,result.email);
           this.navCtrl.push(HomePage);
         }
       })
-    }
+    }}
 
   }
 
