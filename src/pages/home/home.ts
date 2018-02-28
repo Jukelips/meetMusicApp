@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,Platform } from 'ionic-angular';
+import {Events, LoadingController, NavController, Platform} from 'ionic-angular';
 import {LoginPage} from "../login/login";
 import {PreferencesPage} from "../preferences/preferences";
 import {RegisterPage} from "../register/register";
@@ -18,16 +18,16 @@ var token;
   templateUrl: 'home.html'
 })
 export class HomePage {
-  username = '';
-  email = '';
   connect : boolean;
 
-  constructor(private http: HttpClient,private inAppBrowser : InAppBrowser,private platform : Platform,private navCtrl: NavController, private userProvider : UserServiceProvider) {
-    this.connect = userProvider.isLoggedIn();
+  constructor(private http: HttpClient,private inAppBrowser : InAppBrowser,private platform : Platform, public events: Events,
+              private navCtrl: NavController,private userService : UserServiceProvider, loadingCtrl: LoadingController){
+    this.connect = userService.isLoggedIn();
     if(this.connect){
-      this.userProvider.getUserDetails().subscribe((res)=>{
+      this.userService.getUserDetails().subscribe((res)=>{
         console.log(" sdf sdfsdfsfsdfsf "+res);
       });
+
     }
   }
 
@@ -57,8 +57,9 @@ export class HomePage {
   }
 
   public logout() {
-    this.userProvider.logout();
+    this.userService.logout();
     this.navCtrl.setRoot(HomePage);
+    this.events.publish('user:connected', Date.now());
   }
 
   public login() {
@@ -106,8 +107,6 @@ export class HomePage {
     this.http.get('https://api.spotify.com/v1/me',{headers :{'Authorization':'Bearer ' + token}}).subscribe((evt)=>{
       console.log(JSON.stringify(evt));
     })
-
-
   }
 
   getUserTop(type){
@@ -115,13 +114,11 @@ export class HomePage {
     if(token !=null){
     this.http.get('https://api.spotify.com/v1/me/top/'+type+'?limit=50',{headers :{'Authorization':'Bearer ' + token}}).subscribe((evt : UserData)=>{
       userData = evt.items;
-      this.userProvider.setUserGenre(userData);
+      this.userService.setUserGenre(userData);
     });
-
-   }else{
+    }else{
       console.log("tu dois te co");
     }
-
   }
 }
 
