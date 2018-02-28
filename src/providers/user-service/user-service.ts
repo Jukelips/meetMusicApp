@@ -116,6 +116,7 @@ export class UserServiceProvider extends BaseServiceProvider {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('data');
     this.loggedIn = false;
     this._authNavStatusSource.next(false);
   }
@@ -140,7 +141,7 @@ export class UserServiceProvider extends BaseServiceProvider {
     console.log(idUser);
     return this.http.get( "/api/user/"+ idUser,{headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*','Authorization' : 'Bearer '+ authToken})})
       .map((res) => {
-        console.log(JSON.stringify(res));
+        localStorage.setItem('data', JSON.stringify(res));
         return res;
       })
       .catch(this.handleError);

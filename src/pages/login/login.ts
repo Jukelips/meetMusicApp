@@ -66,7 +66,6 @@ export class LoginPage {
       if(this.userService.isLoggedIn()){
       this.userService.getUserDetails()._finally(()=>this.isRequesting = false).subscribe(result =>{
         if(result){
-          this.auth.setUserInfo(result.username,result.email);
           this.navCtrl.setRoot(HomePage);
         }
       })
