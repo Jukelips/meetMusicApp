@@ -23,7 +23,7 @@ export class UserServiceProvider extends BaseServiceProvider {
   // Observable navItem stream
   authNavStatus$ = this._authNavStatusSource.asObservable();
 
-  private  loggedIn = false;
+  private  loggedIn ;
 
   public headers: any = {
     'Accept': 'application/json',
@@ -103,9 +103,7 @@ export class UserServiceProvider extends BaseServiceProvider {
         '/api' + "/token",
         JSON.stringify(body),  {headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*'})})
       .map((response : leToken ) => {
-
         localStorage.setItem('token', response.token);
-
         this.loggedIn = true;
         console.log("loggedin  "+ this.loggedIn);
         this._authNavStatusSource.next(true);
@@ -125,12 +123,34 @@ export class UserServiceProvider extends BaseServiceProvider {
     return this.loggedIn;
   }
 
+  setLoggedIn(val){
+    this.loggedIn=val;
+  }
+
+  setUserGenre(artists) {
+    console.log("On est dans usergenre service");//******
+    console.log(JSON.stringify(artists));
+    let body = { artists };
+    let base64 =localStorage.getItem('token');
+    let tabToken =base64.split('.');
+    let base64todecod = tabToken[0]+tabToken[1];
+    let userId = atob(base64todecod);
+    let idUser =userId.match("\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}");
+    return this.http
+      .put(
+        '/api' + "/user/"+idUser+"/synchronize/tastes",
+        JSON.stringify(body),  {headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*'})})
+      .map((response ) => {
+      console.log("c'est ok");
+        return true;
+      })
+      .catch(this.handleError);
+  }
+
   // si on veut afficher les infos pour un user usr sa page profil.
   getUserDetails(): Observable<UserRegistration> {
     console.log("on est dans userdetails");
 
-    let authToken = localStorage.getItem('token');
-    console.log(authToken);
     let base64 =localStorage.getItem('token');
     let tabToken =base64.split('.');
     let base64todecod = tabToken[0]+tabToken[1];
@@ -139,7 +159,8 @@ export class UserServiceProvider extends BaseServiceProvider {
     console.log(userId);
     let idUser =userId.match("\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}");
     console.log(idUser);
-    return this.http.get( "/api/user/"+ idUser,{headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*','Authorization' : 'Bearer '+ authToken})})
+
+    return this.http.get( "/api/user/"+ idUser,{headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*','Authorization' : 'Bearer '+ base64})})
       .map((res) => {
         localStorage.setItem('data', JSON.stringify(res));
         return res;
@@ -167,6 +188,7 @@ export interface UserRegistration {
   password: string;
   phone : string;
   username: string;
+
 }
 /*
  avatarUrl

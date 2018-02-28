@@ -24,6 +24,11 @@ export class HomePage {
 
   constructor(private http: HttpClient,private inAppBrowser : InAppBrowser,private platform : Platform,private navCtrl: NavController, private userProvider : UserServiceProvider) {
     this.connect = userProvider.isLoggedIn();
+    if(this.connect){
+      if(this.userProvider.isLoggedIn()){
+        this.userProvider.getUserDetails();
+      }
+    }
   }
 
   goTo(page) {
@@ -87,13 +92,13 @@ export class HomePage {
 
     browser.on("exit").subscribe((evt)=>{
       console.log("ça ferme  "+ token);
-      this.callback(token);
+      this.callback();
     })
   }
 
-  callback( token){
+  callback(){
     console.log('on est callback');
-    this.getUserInfo(token);
+    this.getUserTop("artists");
   }
 
   getUserInfo(token){
@@ -108,17 +113,11 @@ export class HomePage {
   getUserTop(type){
     let userData;
     if(token !=null){
-    this.http.get('https://api.spotify.com/v1/me/top/'+type+'?limit=1',{headers :{'Authorization':'Bearer ' + token}}).subscribe((evt : UserData)=>{
-      for(var i=0; i<1;i++) {
-        console.log(evt.items[i].name);
-        for(var j=0;j<evt.items[i].genres.length;j++){
-          console.log(" - "+ evt.items[i].genres[j]);
-        }
-        console.log ("");
-      }
+    this.http.get('https://api.spotify.com/v1/me/top/'+type+'?limit=50',{headers :{'Authorization':'Bearer ' + token}}).subscribe((evt : UserData)=>{
       userData = evt.items;
+      this.userProvider.setUserGenre(userData);
+    });
 
-    })
    }else{
       console.log("tu dois te co");
     }

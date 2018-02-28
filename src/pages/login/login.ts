@@ -53,23 +53,17 @@ export class LoginPage {
     if (valid) {
       console.log("On est dans valide login");
       console.log("username : " + value.username + "\n password : " + value.password + " Valid :" + valid );
-      this.userService.login(value.username, value.password)
-        .finally(() => this.isRequesting = false)
-        .subscribe(
+      this.userService.login(value.username, value.password).subscribe(
           result => {
             if (result) {
-              this.auth.isConnected = true;
+              this.userService.setLoggedIn(result);
+              console.log("login");
+              this.navCtrl.setRoot(HomePage);
+
             }
           },
           error => this.errors = "Identifiants invalides");
-      this.isRequesting = true;
-      if(this.userService.isLoggedIn()){
-      this.userService.getUserDetails()._finally(()=>this.isRequesting = false).subscribe(result =>{
-        if(result){
-          this.navCtrl.setRoot(HomePage);
-        }
-      })
-    }}
+    }
 
   }
 
