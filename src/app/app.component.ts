@@ -31,9 +31,7 @@ export class MyApp {
       this.pages = [
         { title: 'Home', icon: 'home', component: HomePage },
         {title: 'Se connecter', icon:'lock', component: LoginPage},
-        { title: 'Profil', icon:'md-contact', component: ProfilPage },
-        {title: 'Inscription', icon:'md-create', component: RegisterPage},
-        { title: 'Preferences', icon: 'md-settings', component: PreferencesPage }
+        {title: 'Inscription', icon:'md-create', component: RegisterPage}
       ];
     } else {
       this.pages = [
