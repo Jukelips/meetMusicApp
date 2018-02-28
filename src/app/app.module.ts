@@ -44,7 +44,6 @@ import { BaseServiceProvider } from '../providers/base-service/base-service';
     HomePage,
     ListPage,
     PreferencesPage,
-
     RegisterPage,
     ProfilPage
   ],

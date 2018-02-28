@@ -21,7 +21,7 @@ export class MyApp {
   rootPage: any = HomePage;
   //rootPage: any = 'LoginPage';
 
-  pages: Array<{title: string, icon: string, component: any}>;
+  pages: Array<{title: string, icon: any, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private userProvider: UserServiceProvider) {
     this.initializeApp();
@@ -29,7 +29,7 @@ export class MyApp {
 
     if (userProvider.isLoggedIn() == false) {
       this.pages = [
-        { title: 'Home', icon: 'md-home', component: HomePage },
+        { title: 'Home', icon: 'home', component: HomePage },
         {title: 'Se connecter', icon:'lock', component: LoginPage},
         { title: 'Profil', icon:'md-contact', component: ProfilPage },
         {title: 'Inscription', icon:'md-create', component: RegisterPage},
@@ -60,6 +60,7 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(HomePage);
+    // navigate to the new page if it is not the current page
+    this.nav.setRoot(page.component);
   }
 }

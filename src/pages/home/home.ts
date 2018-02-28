@@ -3,16 +3,15 @@ import { NavController,Platform } from 'ionic-angular';
 import {LoginPage} from "../login/login";
 import {PreferencesPage} from "../preferences/preferences";
 import {RegisterPage} from "../register/register";
-import {AuthServiceProvider, User} from "../../providers/auth-service/auth-service";
 import { InAppBrowser,InAppBrowserOptions  } from '@ionic-native/in-app-browser';
 import {HttpClient} from "@angular/common/http";
+import { MpPage } from "../mp/mp";
+import {UserServiceProvider} from "../../providers/user-service/user-service";
+import {ProfilPage} from "../profil/profil";
 
 //var client_id = 'db770f92f6ef4f3f87df6c6ec279c934'; // Your client id
 //var client_secret = '3246f992f0ec4c3fa71410ef32cf0bda'; // Your secret
 var token;
-import { MpPage } from "../mp/mp";
-import {UserServiceProvider} from "../../providers/user-service/user-service";
-import {ProfilPage} from "../profil/profil";
 
 @Component({
   selector: 'page-home',
@@ -40,6 +39,8 @@ export class HomePage {
       this.navCtrl.push(ProfilPage);
     }else if (page === 'MpPage') {
       this.navCtrl.push(MpPage);
+    } else if (page === 'ProfilPage') {
+      this.navCtrl.push(ProfilPage);
     }
 
   }
@@ -52,7 +53,7 @@ export class HomePage {
 
   public logout() {
     this.userProvider.logout();
-    this.navCtrl.push(HomePage);
+    this.navCtrl.setRoot(HomePage);
   }
 
   public login() {
