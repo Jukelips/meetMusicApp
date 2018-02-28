@@ -23,7 +23,6 @@ import { Subscription } from 'rxjs';
 })
 
 export class LoginPage {
-  brandNew: boolean;
   loading: Loading;
   isConnected: boolean;
   errors: string;
@@ -48,21 +47,16 @@ export class LoginPage {
           result => {
             if (result) {
               this.isConnected = this.userService.isLoggedIn();
-              this.navCtrl.popToRoot(HomePage);
+              this.navCtrl.setRoot(HomePage);
+              this.navCtrl.popToRoot();
               this.events.publish('user:connected', Date.now());
             }
           },
-          error => this.errors = this.showAlert());
+          error => this.showAlert());
       this.isRequesting = true;
       }
   }
 
-  /* appel de userdetails dans login - Clement l'a deplacé dans le constructor home,
-  * je le laisse ici pour l'instant si jamais on a besoin de le reprendre
-  if(this.userService.isLoggedIn()){
-  this.userService.getUserDetails()._finally(()=>this.isRequesting = false).subscribe(result =>{
-})
-}*/
 
 
   public showAlert(){
