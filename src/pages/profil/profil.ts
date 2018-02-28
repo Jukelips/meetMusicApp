@@ -34,7 +34,7 @@ export class ProfilPage {
     }else{
       this.sexe ="Femme";
     }
-    this.currentUser.birthDate = userData.birthDate;
+    this.currentUser.birthDate = userData.birthDate.split('T')[0];
     console.log(userData.username);
   }
 
