@@ -158,10 +158,11 @@ export class UserServiceProvider extends BaseServiceProvider {
 
     console.log(userId);
     let idUser =userId.match("\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}");
-    console.log(idUser);
-
-    return this.http.get( "/api/user/"+ idUser,{headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*','Authorization' : 'Bearer '+ base64})})
+    console.log(idUser[0]);
+    console.log(base64);
+    return this.http.get( "/api/user/"+ idUser[0],{headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*','Authorization' : 'Bearer '+ base64})})
       .map((res) => {
+      console.log("get user detail");
         localStorage.setItem('data', JSON.stringify(res));
         return res;
       })

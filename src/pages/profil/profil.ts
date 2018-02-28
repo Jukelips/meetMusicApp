@@ -24,7 +24,9 @@ export class ProfilPage {
 
   constructor(private userService: UserServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
     console.log("Constructeur Profil");
-    let userData = JSON.parse(localStorage.getItem('data'));
+
+    let user = localStorage.getItem('data');
+    let userData = JSON.parse(user);
     this.currentUser.email = userData.email;
     this.currentUser.username = userData.username;
     this.currentUser.description = userData.description;

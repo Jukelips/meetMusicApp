@@ -25,7 +25,9 @@ export class HomePage {
   constructor(private http: HttpClient,private inAppBrowser : InAppBrowser,private platform : Platform,private navCtrl: NavController, private userProvider : UserServiceProvider) {
     this.connect = userProvider.isLoggedIn();
     if(this.connect){
-        this.userProvider.getUserDetails();
+      this.userProvider.getUserDetails().subscribe((res)=>{
+        console.log(" sdf sdfsdfsfsdfsf "+res);
+      });
     }
   }
 
@@ -121,45 +123,6 @@ export class HomePage {
     }
 
   }
-
-
-
-
-  /* authSpotify(code) {
-console.log("on est authspotify");
-    const url = "https://accounts.spotify.com/api/token";
-    const data = {
-      code: code,
-      redirect_uri: "http://localhost:8100/",
-      grant_type: 'authorization_code',
-    };
-     const headers = new HttpHeaders().set('Authorization','Basic ' + btoa(client_id + ':' + client_secret))
-       .append('Content-Type',  'application/json')
-       .append( 'Access-Control-Allow-Origin','*')
-       .append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-
-     //Setting multiple headers.
-     var spotifyAuth = function(){
-       //Make the HTTP Post Request
-       this.http.post(url , data, {
-         headers: new HttpHeaders({
-           'Authorization':'Basic ' + btoa(client_id + ':' + client_secret),
-           'Content-Type':  'application/json','Access-Control-Allow-Origin':'*',
-           'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT'})})
-         .subscribe(
-           result => {
-             console.log(result);
-           },
-           err => {
-             console.log("Error- something is wrong!")
-           });
-     }*/
-
-  /*  return this.http.post(url, data, {headers :{'Authorization':'Basic ' + btoa(client_id + ':' + client_secret),'Content-Type':  'application/json','Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT'}})
-   .pipe(
-      catchError((err => this.handleError(err)))
-    );*/
-
 }
 
 interface UserData{
