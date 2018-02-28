@@ -18,26 +18,22 @@
       <ion-row>
         <ion-col>
           <ion-list>
+
             <ion-item>
-              <ion-label>username:</ion-label><!--#registerForm="ngForm" -->
               <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="credentials.username" ></ion-input>
             </ion-item>
-            <ion-item>
-              <ion-label>password:</ion-label>
-              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="credentials.password"></ion-input>
-            </ion-item>
-            <ion-item>
 
+            <ion-item>
+              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="credentials.password"></ion-input>
             </ion-item>
           </ion-list>
         </ion-col>
       </ion-row>
+
       <ion-row>
           <button ion-button class="submit-btn" color="meetmusic" full type="submit" >Se connecter</button>
           <button ion-button class="register-btn" color="meetmusic" block clear (click)="createAccount()">Créer un compte</button>
       </ion-row>
     </form>
 
-
-  <ion-label>{{errors}} </ion-label>
 </ion-content>

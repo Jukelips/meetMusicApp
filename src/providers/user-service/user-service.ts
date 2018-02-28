@@ -7,6 +7,7 @@ import {ConfigServiceProvider} from "../config-service/config-service";
 import 'rxjs/add/operator/map';
 //import {Header} from "ionic-angular";
 import {Headers, RequestOptions} from "@angular/http";
+import {LoadingController} from "ionic-angular";
 /*
   Generated class for the UserServiceProvider provider.
 
@@ -23,14 +24,14 @@ export class UserServiceProvider extends BaseServiceProvider {
   // Observable navItem stream
   authNavStatus$ = this._authNavStatusSource.asObservable();
 
-  private  loggedIn ;
+  private  loggedIn = false;
 
   public headers: any = {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
   };
 
-  constructor(public http: HttpClient, private configService: ConfigServiceProvider) { //private configService: ConfigServiceProvider
+  constructor(public http: HttpClient, private configService: ConfigServiceProvider, public loadingCtrl: LoadingController) { //private configService: ConfigServiceProvider
     super();
     this.loggedIn = !!localStorage.getItem('token');
     // ?? not sure if this the best way to broadcast the status but seems to resolve issue on page refresh where auth status is lost in
@@ -39,52 +40,16 @@ export class UserServiceProvider extends BaseServiceProvider {
     this.baseUrl = configService.getApiURI();
   }
 
-  /**proxy**/
-  /*{
-   "id": "00000000-0000-0000-0000-000000000000",
-   "username": "ciprian69",
-   "password": "P@ssword",
-   "firstName": "Ciprian",
-   "lastName": "Pintilie",
-   "email": "ciprian@gmail.com",
-   "gender": 1,
-   "avatarUrl": "???",
-   "phone": "1669696969",
-   "birthDate": "1992-04-26T00:00:00",
-   "description": "Back-end 4 life",
-   "longitude": "1x",
-   "latitude": "1x"
-   }*/
-
-/*
- avatarUrl
- birthdate	1
- description	description
- email	123ERT
- firstName	ciprian
- gender	0909090909
- id
- lastName	test
- latitude	2,345678
- longitude	1,34566
- password	cipripri
- username	cipripri@anal.com
- */
-
-//(value.birthDate,value.email,value.gender,value.password,value.phone,value.username)
   register(birthDate: string, email: string, gender: number,
            password: string, phone : string, username: string): Observable<UserRegistration>
   {
-    console.log("On est dans Register service");//******
-    let id= "";
+    /**
+     * Trouver un moyen pour ne plus rentre ces valeurs en dur dans l'appel, c'est crade*/
     let description = "description";
     let firstName = "ciprian";
     let lastName = "test";
-    let avatarUrl = "";
     let longitude = "1,34566";
-    let latitude = "2,345678"
-    //let body = JSON.stringify({avatarUrl, birthDate, description, email,
-      //firstName, gender, id, lastName, latitude, longitude, password, phone, username});
+    let latitude = "2,345678";
 
     let body = JSON.stringify({birthDate, description, email,
       firstName, gender, lastName, latitude, longitude, password, phone, username});
@@ -102,9 +67,10 @@ export class UserServiceProvider extends BaseServiceProvider {
       .post(
         '/api' + "/token",
         JSON.stringify(body),  {headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*'})})
-      .map((response : leToken ) => {
-        localStorage.setItem('token', response.token);
+      .map((response : LeToken ) => {
         this.loggedIn = true;
+        this.loading();
+        localStorage.setItem('token', response.token);
         console.log("loggedin  "+ this.loggedIn);
         this._authNavStatusSource.next(true);
         return true;
@@ -112,45 +78,34 @@ export class UserServiceProvider extends BaseServiceProvider {
       .catch(this.handleError);
   }
 
+  loading(){
+    let message;
+    if(this.loggedIn){message = "Connexion...";}
+    else{message = "Déconnexion...";}
+    let loading = this.loadingCtrl.create({
+      content: message,
+      duration: 500
+    });
+    loading.present();
+  }
+
   logout() {
     localStorage.removeItem('token');
-    localStorage.removeItem('data');
     this.loggedIn = false;
     this._authNavStatusSource.next(false);
+    this.loading();
   }
 
   isLoggedIn() {
     return this.loggedIn;
   }
 
-  setLoggedIn(val){
-    this.loggedIn=val;
-  }
-
-  setUserGenre(artists) {
-    console.log("On est dans usergenre service");//******
-    console.log(JSON.stringify(artists));
-    let body = { artists };
-    let base64 =localStorage.getItem('token');
-    let tabToken =base64.split('.');
-    let base64todecod = tabToken[0]+tabToken[1];
-    let userId = atob(base64todecod);
-    let idUser =userId.match("\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}");
-    return this.http
-      .put(
-        '/api' + "/user/"+idUser+"/synchronize/tastes",
-        JSON.stringify(body),  {headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*'})})
-      .map((response ) => {
-      console.log("c'est ok");
-        return true;
-      })
-      .catch(this.handleError);
-  }
-
   // si on veut afficher les infos pour un user usr sa page profil.
   getUserDetails(): Observable<UserRegistration> {
     console.log("on est dans userdetails");
 
+    let authToken = localStorage.getItem('token');
+    console.log(authToken);
     let base64 =localStorage.getItem('token');
     let tabToken =base64.split('.');
     let base64todecod = tabToken[0]+tabToken[1];
@@ -159,10 +114,9 @@ export class UserServiceProvider extends BaseServiceProvider {
     console.log(userId);
     let idUser =userId.match("\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}");
     console.log(idUser);
-
-    return this.http.get( "/api/user/"+ idUser,{headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*','Authorization' : 'Bearer '+ base64})})
+    return this.http.get( "/api/user/"+ idUser,{headers: new HttpHeaders({'Content-Type':  'application/json','Access-Control-Allow-Origin':'*','Authorization' : 'Bearer '+ authToken})})
       .map((res) => {
-        localStorage.setItem('data', JSON.stringify(res));
+        console.log(JSON.stringify(res));
         return res;
       })
       .catch(this.handleError);
@@ -188,39 +142,8 @@ export interface UserRegistration {
   password: string;
   phone : string;
   username: string;
-
 }
-/*
- avatarUrl
- birthdate	1
- description	description
- email	123ERT
- firstName	ciprian
- gender	0909090909
- id
- lastName	test
- latitude	2,345678
- longitude	1,34566
- password	cipripri
- username	cipripri@anal.com
- */
 
-
-
-/*{
- "id": "00000000-0000-0000-0000-000000000000",
- "username": "ciprian69",
- "password": "P@ssword",
- "firstName": "Ciprian",
- "lastName": "Pintilie",
- "email": "ciprian@gmail.com",
- "gender": 1,
- "avatarUrl": "???",
- "phone": "1669696969",
- "birthDate": "1992-04-26T00:00:00",
- "description": "Back-end 4 life",
- "longitude": "1x",
- "latitude": "1x"*/
-interface leToken {
+interface LeToken {
   token : string
 }

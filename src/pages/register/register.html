@@ -43,7 +43,9 @@
             <ion-item>
               <ion-datetime placeholder="Date de naissance" displayFormat="YYYY-MM-DD" name="birthDate" [(ngModel)]="registration.birthDate"></ion-datetime>
             </ion-item>
-
+            <ion-item>
+              <ion-avatar></ion-avatar>
+            </ion-item>
             <ion-item>
               <ion-select #newSelect name="gender" placeholder="Sexe" [(ngModel)]="registration.gender">
                 <ion-option value=2>Femme</ion-option>

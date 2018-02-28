@@ -22,7 +22,7 @@ export class ProfilPage {
     email: '', gender: null, avatarUrl: '', phone: '', birthDate: '', description: '', latitude: '', longitude: ''
   };
 
-  constructor(private userService: UserServiceProvider,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
     console.log("Constructeur Profil");
     let userData = JSON.parse(localStorage.getItem('data'));
     this.currentUser.email = userData.email;

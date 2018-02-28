@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {
-  AlertController, IonicPage, Loading, LoadingController, MenuController, NavController,
+  AlertController, Events, IonicPage, Loading, LoadingController, MenuController, NavController,
   NavParams
 } from 'ionic-angular';
 import {HomePage} from "../home/home";
@@ -25,89 +25,64 @@ import { Subscription } from 'rxjs';
 export class LoginPage {
   brandNew: boolean;
   loading: Loading;
+  isConnected: boolean;
   errors: string;
   isRequesting: boolean;
   submitted: boolean = false;
   credentials: Credentials = { username: '', password: '' };
 
-  constructor(private userService: UserServiceProvider,public navCtrl: NavController, public navParams: NavParams,
-              menuCtrl : MenuController, private auth :  AuthServiceProvider,
-              private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
-    console.log("constructor login");
+  constructor(private userService: UserServiceProvider,public navCtrl: NavController, public navParams: NavParams, public events: Events,
+              menuCtrl : MenuController, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
   }
 
-  /*destroy() {
-    // prevent memory leak by unsubscribing
-    this.subscription.unsubscribe();
-  }*/
-
-
   login({ value, valid }: { value: Credentials, valid: boolean }) {
-    console.log("On est dans login");
-    console.log("Credentials username : " + this.credentials.username + "\n password : " + this.credentials.password + " Valid :" + valid );
     this.submitted = true;
     this.isRequesting = true;
     this.errors='';
     value = this.credentials;
     valid = true;
     if (valid) {
-      console.log("On est dans valide login");
-      console.log("username : " + value.username + "\n password : " + value.password + " Valid :" + valid );
-      this.userService.login(value.username, value.password).subscribe(
+      this.userService.login(value.username, value.password)
+        .finally(() => this.isRequesting = false)
+        .subscribe(
           result => {
             if (result) {
-              this.userService.setLoggedIn(result);
-              console.log("login");
-              this.navCtrl.setRoot(HomePage);
-              this.navCtrl.popToRoot();
+              this.isConnected = this.userService.isLoggedIn();
+              this.navCtrl.popToRoot(HomePage);
+              this.events.publish('user:connected', Date.now());
             }
           },
-          error => this.errors = "Identifiants invalides");
-    }
-
+          error => this.errors = this.showAlert());
+      this.isRequesting = true;
+      }
   }
 
+  /* appel de userdetails dans login - Clement l'a deplacé dans le constructor home,
+  * je le laisse ici pour l'instant si jamais on a besoin de le reprendre
+  if(this.userService.isLoggedIn()){
+  this.userService.getUserDetails()._finally(()=>this.isRequesting = false).subscribe(result =>{
+})
+}*/
+
+
+  public showAlert(){
+    this.loading.dismiss();
+    let alert = this.alertCtrl.create({
+      title: 'Erreur lors de l\'authentification',
+      subTitle: 'Le nom d\'utilisateur et/ou le mot de passe est incorrect',
+      buttons: ['OK']
+    });
+    alert.present();
+
+  }
 
   public createAccount() {
     this.navCtrl.push(RegisterPage);
   }
 
-  /*public login() {
-    this.showLoading()
-    this.auth.login(this.registerCredentials).subscribe(allowed => {
-        if (allowed) {
-          this.navCtrl.push(HomePage);
-        } else {
-          this.showError("Access Denied");
-        }
-      },
-      error => {
-        this.showError(error);
-      });
-  }
-
-  showLoading() {
-    this.loading = this.loadingCtrl.create({
-      content: 'Veuillez patienter',
-      dismissOnPageChange: true
-    });
-    this.loading.present();
-  }
-
-  showError(text) {
-    this.loading.dismiss();
-
-    let alert = this.alertCtrl.create({
-      title: 'Fail',
-      subTitle: text,
-      buttons: ['OK']
-    });
-    alert.present(prompt);
-  }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-  }*/
+  }
 
   goTo(page) {
     if (page === 'HomePage') {
