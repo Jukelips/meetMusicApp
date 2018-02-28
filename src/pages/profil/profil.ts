@@ -18,7 +18,7 @@ export class ProfilPage {
 
   currentUser: UserRegistration = {
     id: '', username: '', password: '', firstName: '', lastName: '',
-    email: '', gender: '', avatarUrl: '', phone: '', birthdate: '', description: '', latitude: '', longitude: ''
+    email: '', gender: null, avatarUrl: '', phone: '', birthDate: '', description: '', latitude: '', longitude: ''
   };
 
 

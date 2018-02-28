@@ -23,7 +23,7 @@ export class UserServiceProvider extends BaseServiceProvider {
   // Observable navItem stream
   authNavStatus$ = this._authNavStatusSource.asObservable();
 
-  private loggedIn = false;
+  private  loggedIn = false;
 
   public headers: any = {
     'Accept': 'application/json',
