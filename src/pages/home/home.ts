@@ -25,9 +25,7 @@ export class HomePage {
   constructor(private http: HttpClient,private inAppBrowser : InAppBrowser,private platform : Platform,private navCtrl: NavController, private userProvider : UserServiceProvider) {
     this.connect = userProvider.isLoggedIn();
     if(this.connect){
-      if(this.userProvider.isLoggedIn()){
         this.userProvider.getUserDetails();
-      }
     }
   }
 

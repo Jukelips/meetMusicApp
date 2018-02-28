@@ -59,7 +59,7 @@ export class LoginPage {
               this.userService.setLoggedIn(result);
               console.log("login");
               this.navCtrl.setRoot(HomePage);
-
+              this.navCtrl.popToRoot();
             }
           },
           error => this.errors = "Identifiants invalides");
