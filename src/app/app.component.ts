@@ -11,6 +11,7 @@ import { MpPage } from "../pages/mp/mp";
 import {ProfilPage} from "../pages/profil/profil";
 import 'rxjs/add/operator/map';
 import {UserServiceProvider} from "../providers/user-service/user-service";
+import {MatchPage} from "../pages/match/match";
 
 @Component({
   templateUrl: 'app.html'
@@ -38,7 +39,8 @@ export class MyApp {
       this.pages = [
         { title: 'Home', icon: 'home', component: HomePage},
         { title: 'Se connecter', icon:'lock', component: LoginPage},
-        { title: 'Inscription', icon:'md-create', component: RegisterPage}
+        { title: 'Inscription', icon:'md-create', component: RegisterPage},
+        { title: 'Matchs',  icon: 'md-people', component: MatchPage}
       ];
     } else {
       this.pages = [

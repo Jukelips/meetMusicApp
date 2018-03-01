@@ -3,6 +3,7 @@ import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angula
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {LoginPage} from "../login/login";
 import {UserRegistration, UserServiceProvider} from '../../providers/user-service/user-service';
+import {LocationServiceProvider} from "../../providers/location-service/location-service";
 
 /**
  * Generated class for the RegisterPage page.
@@ -25,7 +26,7 @@ export class RegisterPage {
     email:'',gender: null,avatarUrl:'',phone:'',birthDate:'',description:'',latitude:'',longitude:''};
 
   constructor(private userService: UserServiceProvider,public navCtrl: NavController,
-              public navParams: NavParams){
+              public navParams: NavParams, public locService: LocationServiceProvider){
   }
 
   ionViewDidLoad() {

@@ -20,6 +20,11 @@ import {ProfilPage} from "../pages/profil/profil";
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { ConfigServiceProvider } from '../providers/config-service/config-service';
 import { BaseServiceProvider } from '../providers/base-service/base-service';
+import {MatchPage} from "../pages/match/match";
+import { MatchServiceProvider } from '../providers/match-service/match-service';
+import {LocationServiceProvider} from "../providers/location-service/location-service";
+import {BackgroundGeolocation} from "@ionic-native/background-geolocation";
+import { Geolocation} from "@ionic-native/geolocation";
 
 @NgModule({
   declarations: [
@@ -28,7 +33,8 @@ import { BaseServiceProvider } from '../providers/base-service/base-service';
     ListPage,
     RegisterPage,
     PreferencesPage,
-    ProfilPage
+    ProfilPage,
+    MatchPage
   ],
   imports: [
     BrowserModule,
@@ -44,7 +50,8 @@ import { BaseServiceProvider } from '../providers/base-service/base-service';
     ListPage,
     PreferencesPage,
     RegisterPage,
-    ProfilPage
+    ProfilPage,
+    MatchPage
   ],
   providers: [
     StatusBar,
@@ -55,7 +62,11 @@ import { BaseServiceProvider } from '../providers/base-service/base-service';
     RestServiceProvider,
     UserServiceProvider,
     ConfigServiceProvider,
-    BaseServiceProvider
+    BaseServiceProvider,
+    MatchServiceProvider,
+    LocationServiceProvider,
+    BackgroundGeolocation,
+    Geolocation
   ]
 })
 export class AppModule {}

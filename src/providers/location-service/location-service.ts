@@ -69,4 +69,12 @@ export class LocationServiceProvider {
 
   }
 
+  getLat(){
+    return this.lat;
+  }
+
+  getLong() {
+    return this.lng;
+  }
+
 }

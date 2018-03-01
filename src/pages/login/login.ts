@@ -8,6 +8,7 @@ import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {RegisterPage} from "../register/register";
 import {Credentials, UserServiceProvider} from '../../providers/user-service/user-service';
 import { Subscription } from 'rxjs';
+import {LocationServiceProvider} from "../../providers/location-service/location-service";
 
 /**
  * Generated class for the LoginPage page.
@@ -32,6 +33,7 @@ export class LoginPage {
 
   constructor(private userService: UserServiceProvider,public navCtrl: NavController, public navParams: NavParams, public events: Events,
               menuCtrl : MenuController, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+
   }
 
   login({ value, valid }: { value: Credentials, valid: boolean }) {
@@ -60,7 +62,7 @@ export class LoginPage {
 
 
   public showAlert(){
-    this.loading.dismiss();
+    //this.loading.dismiss();
     let alert = this.alertCtrl.create({
       title: 'Erreur lors de l\'authentification',
       subTitle: 'Le nom d\'utilisateur et/ou le mot de passe est incorrect',
