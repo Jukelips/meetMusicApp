@@ -80,8 +80,14 @@ export class UserServiceProvider extends BaseServiceProvider {
 
   loading(){
     let message;
-    if(this.loggedIn){message = "Connexion...";}
-    else{message = "Déconnexion...";}
+    if(this.loggedIn){
+      message = "Connexion...";
+      this.loggedIn = true;
+    }
+    else{
+      message = "Déconnexion...";
+      this.loggedIn = false;
+    }
     let loading = this.loadingCtrl.create({
       content: message,
       duration: 500
